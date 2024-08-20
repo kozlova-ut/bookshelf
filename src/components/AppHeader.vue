@@ -23,7 +23,8 @@ const user = useUserStore();
 </script>
 
 <style lang="scss">
-    @import '@/assets/variables';
+    @import '@/assets/styles/variables';
+    @import '@/assets/styles/mixins';
 
     .header {
         padding: 20px 0px;
@@ -39,6 +40,7 @@ const user = useUserStore();
             font-weight: bold;
             color: $orange;
             cursor: pointer;
+            transition: all .5s ease;
 
             &:hover {
                 color: $dark-orange;   
@@ -49,21 +51,7 @@ const user = useUserStore();
             margin-left: auto;
             
             button {
-                $main-color: $orange;
-                $hover-color: $dark-orange;
-
-                padding: 8px;
-                min-width: 100px;
-                font-weight: bold;
-                color: $main-color;
-                border: 2px solid $main-color;
-                background: transparent;
-                cursor: pointer;
-
-                &:hover {
-                    color: $hover-color;
-                    border-color: $hover-color;
-                }
+                @include button;
             }
         }
     }

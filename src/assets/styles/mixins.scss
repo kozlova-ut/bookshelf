@@ -1,0 +1,22 @@
+@import './variables.scss';
+
+@mixin button {
+    $main-color: $orange;
+    $hover-color: $dark-orange;
+
+    padding: 8px;
+    min-width: 100px;
+    font-weight: bold;
+    color: $main-color;
+    text-align: center;
+    border: 2px solid $main-color;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+
+    &:hover {
+        color: $hover-color;
+        border-color: $hover-color;
+    }
+}

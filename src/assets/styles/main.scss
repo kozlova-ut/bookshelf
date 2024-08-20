@@ -5,6 +5,7 @@
 
 * {
   font-family: "Montserrat", sans-serif;
+  box-sizing: border-box;
 }
 
 
@@ -12,6 +13,14 @@ ul {
   margin: 0px;
   padding: 0px;
   list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
 }
 
 .container {
