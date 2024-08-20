@@ -5,9 +5,21 @@
             <img src="@/assets/img/placeholder.png" :alt="book.title">
             <div class="actions" v-if="user.isAuthorized">
                 <div class="actions-btn">
-                    <a class="to-read" href="" title="Планирую прочесть"></a>
-                    <a class="in-progress" href="" title="Читаю"></a>
-                    <a class="completed" href="" title="Прочитал"></a>
+                    <div 
+                        @click="bookStatus.toggleBookStatus(book.id, BookStatus.TO_READ)" 
+                        :class="['btn', 'to-read', {'status-is-active': statusIsActive(BookStatus.TO_READ)}]" 
+                        title="Планирую прочесть">
+                    </div>
+                    <div 
+                        @click="bookStatus.toggleBookStatus(book.id, BookStatus.IN_PROGRESS)" 
+                        :class="['btn', 'in-progress', {'status-is-active': statusIsActive(BookStatus.IN_PROGRESS)}]" 
+                        title="Читаю">
+                    </div>
+                    <div 
+                        @click="bookStatus.toggleBookStatus(book.id, BookStatus.COMPLETED)" 
+                        :class="['btn', 'completed', {'status-is-active': statusIsActive(BookStatus.COMPLETED)}]" 
+                        title="Прочитал">
+                    </div>
                 </div>
             </div> 
         </div>
@@ -21,16 +33,20 @@
     </div>
 </template>
 
-
 <script lang="ts" setup>
 import type { IBook } from '@/types/books';
+import { BookStatus } from '@/types/books';
 import { useUserStore } from '@/stores/user';
+import { useBookStatusStore } from '@/stores/bookStatus';
 
 const user = useUserStore();
+const bookStatus = useBookStatusStore();
 const props = defineProps<{ book: IBook }>();
 
+const statusIsActive = (status: BookStatus): boolean => {
+    return bookStatus.getBookStatus(props.book.id) === status;
+}
 </script>
-
 
 <style lang="scss" scoped>
 @import '@/assets/styles/mixins.scss';
@@ -82,7 +98,7 @@ const props = defineProps<{ book: IBook }>();
     .actions-btn {
         float: right;
 
-        a {
+        .btn {
             display: inline-block;
             margin-left: 4px;
             padding: 5px;
@@ -93,9 +109,14 @@ const props = defineProps<{ book: IBook }>();
             background: white;
             border-radius: 8px 8px 0px 0px;
             transition: .5s ease-in-out;
+            cursor: pointer;
+
+            &.status-is-active {
+                background: $orange;
+            }
 
             &:hover {
-                background: $dark-orange;
+                background: $orange;
             }
         }
 
