@@ -3,7 +3,7 @@
         <div class="container">
             <div class="header__content">
                 <ul class="header__menu">
-                    <a class="header__link">Главная</a>
+                    <RouterLink to="/" class="header__link">Главная</RouterLink>
                 </ul>
                 <div class="header__account">
                     <a v-if="user.isAuthorized" class="header__link">Мои книги</a>
@@ -16,6 +16,7 @@
 
 <script setup>
 import { useUserStore } from '@/stores/user';
+import { RouterLink } from 'vue-router';
 
 const user = useUserStore();
 

@@ -3,49 +3,37 @@
         <div class="book-image">
             <div class="shadow"  v-if="user.isAuthorized"></div>
             <img src="@/assets/img/placeholder.png" :alt="book.title">
-            <div class="actions" v-if="user.isAuthorized">
-                <div class="actions-btn">
-                    <div 
-                        @click="bookStatus.toggleBookStatus(book.id, BookStatus.TO_READ)" 
-                        :class="['btn', 'to-read', {'status-is-active': statusIsActive(BookStatus.TO_READ)}]" 
-                        title="Планирую прочесть">
-                    </div>
-                    <div 
-                        @click="bookStatus.toggleBookStatus(book.id, BookStatus.IN_PROGRESS)" 
-                        :class="['btn', 'in-progress', {'status-is-active': statusIsActive(BookStatus.IN_PROGRESS)}]" 
-                        title="Читаю">
-                    </div>
-                    <div 
-                        @click="bookStatus.toggleBookStatus(book.id, BookStatus.COMPLETED)" 
-                        :class="['btn', 'completed', {'status-is-active': statusIsActive(BookStatus.COMPLETED)}]" 
-                        title="Прочитал">
-                    </div>
-                </div>
-            </div> 
+            <div class="actions">
+                <ActionButtons  
+                    v-if="user.isAuthorized"
+                    :book="book"
+                    :btnShape="Shape.TAB"
+                ></ActionButtons>
+            </div>
         </div>
         <div class="book-content">
             <div>
                 <h5>{{ book.title }}</h5>
                 <span>{{ book.author }}</span>
             </div>
-            <a class="book-button" href="">Подробнее</a>
+            <RouterLink :to="`/book/${book.id}`" class="book-button">Подробнее</RouterLink>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+import { RouterLink } from 'vue-router';
 import type { IBook } from '@/types/books';
-import { BookStatus } from '@/types/books';
 import { useUserStore } from '@/stores/user';
-import { useBookStatusStore } from '@/stores/bookStatus';
+import { Shape } from '@/types/service';
+
+import ActionButtons from '@/components/ActionButtons.vue'
 
 const user = useUserStore();
-const bookStatus = useBookStatusStore();
+
 const props = defineProps<{ book: IBook }>();
 
-const statusIsActive = (status: BookStatus): boolean => {
-    return bookStatus.getBookStatus(props.book.id) === status;
-}
+
 </script>
 
 <style lang="scss" scoped>
@@ -93,44 +81,7 @@ const statusIsActive = (status: BookStatus): boolean => {
         right: 0;
         opacity: 0;
         transition: .5s ease-in-out;
-    }
-
-    .actions-btn {
-        float: right;
-
-        .btn {
-            display: inline-block;
-            margin-left: 4px;
-            padding: 5px;
-            width: 45px;
-            height: 45px;
-            line-height: 45px;
-            text-align: center;
-            background: white;
-            border-radius: 8px 8px 0px 0px;
-            transition: .5s ease-in-out;
-            cursor: pointer;
-
-            &.status-is-active {
-                background: $orange;
-            }
-
-            &:hover {
-                background: $orange;
-            }
-        }
-
-        .to-read:after {
-            content: url('@/assets/img/to-read.png');
-        }
-
-        .in-progress:after {
-            content: url('@/assets/img/in-progress.png');
-        }
-
-        .completed:after {
-            content: url('@/assets/img/completed.png');
-        }
+        text-align: right;
     }
 } 
 
