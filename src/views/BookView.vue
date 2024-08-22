@@ -48,7 +48,6 @@ const book = ref<IBook | null>();
 const loadBook = async (bookId:number) => {
     const response = await getBook(bookId);
     if (response) {
-        console.log(response);
         book.value = response
     }
 }

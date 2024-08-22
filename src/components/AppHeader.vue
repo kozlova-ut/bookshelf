@@ -6,7 +6,7 @@
                     <RouterLink to="/" class="header__link">Главная</RouterLink>
                 </ul>
                 <div class="header__account">
-                    <a v-if="user.isAuthorized" class="header__link">Мои книги</a>
+                    <RouterLink to="/my-books" v-if="user.isAuthorized" class="header__link">Мои книги</RouterLink>
                     <button @click="user.switchAuthState">{{ user.isAuthorized ? 'Выйти' : 'Войти' }}</button>
                 </div>
             </div>

@@ -1,17 +1,17 @@
 <template>
     <div class="action-btns">
         <div 
-            @click="bookStatus.toggleBookStatus(book.id, BookStatus.TO_READ)" 
+            @click="myBooks.toggleBookStatus(book, BookStatus.TO_READ)" 
             :class="['btn', 'to-read', shapeClass,{'status-is-active': statusIsActive(BookStatus.TO_READ)}]" 
             title="Планирую прочесть">
         </div>
         <div 
-            @click="bookStatus.toggleBookStatus(book.id, BookStatus.IN_PROGRESS)" 
+            @click="myBooks.toggleBookStatus(book, BookStatus.IN_PROGRESS)" 
             :class="['btn', 'in-progress', shapeClass, {'status-is-active': statusIsActive(BookStatus.IN_PROGRESS)}]" 
             title="Читаю">
         </div>
         <div 
-            @click="bookStatus.toggleBookStatus(book.id, BookStatus.COMPLETED)" 
+            @click="myBooks.toggleBookStatus(book, BookStatus.COMPLETED)" 
             :class="['btn', 'completed', shapeClass, {'status-is-active': statusIsActive(BookStatus.COMPLETED)}]" 
             title="Прочитал">
         </div>
@@ -23,13 +23,13 @@ import { computed } from 'vue';
 import type { IBook } from '@/types/books';
 import { BookStatus } from '@/types/books';
 import { Shape } from '@/types/service';
-import { useBookStatusStore } from '@/stores/bookStatus';
+import { useMyBookStore } from '@/stores/myBooks';
 
 const props = defineProps<{ book: IBook, btnShape: Shape }>();
-const bookStatus = useBookStatusStore();
+const myBooks = useMyBookStore();
 
 const statusIsActive = (status: BookStatus): boolean => {
-    return bookStatus.getBookStatus(props.book.id) === status;
+    return myBooks.getBookStatus(props.book.id) === status;
 }
 
 const shapeClass = computed(() => {
