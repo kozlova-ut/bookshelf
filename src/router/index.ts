@@ -1,4 +1,6 @@
+import { useUserStore } from '@/stores/user'
 import { createRouter, createWebHistory } from 'vue-router'
+import { storeToRefs } from 'pinia';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,9 +18,20 @@ const router = createRouter({
     {
       name: 'my-books',
       path: '/my-books',
-      component: () => import('@/views/MyBooks.vue')
+      component: () => import('@/views/MyBooks.vue'),
+      meta: {
+        requiredAuth: true
+      }
     }
   ]
+})
+
+router.beforeEach((to) => {
+  const userStore = useUserStore();
+
+  if (to.meta.requiredAuth && !userStore.isAuthorized) {
+    return '/'
+  } 
 })
 
 export default router

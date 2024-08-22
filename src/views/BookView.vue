@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="book">
+        <div class="book" v-if="book">
             <div class="book__img">
                 <img src="@/assets/img/placeholder.png" :alt="book.title">
             </div>
