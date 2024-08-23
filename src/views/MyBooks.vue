@@ -15,14 +15,18 @@
             </div>
         </aside>
         <main>
-            <h2>Мои книги</h2>
+            <h2>Мои книги
+                {{ filterHeader 
+                    ? `: ${filterHeader} (${count})`
+                    : '' 
+                }}</h2>
             <BookList :books="filteredBooks"></BookList>
         </main>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useMyBookStore } from '@/stores/myBooks';
 import BookList from '@/components/BookList.vue';
 import { BookStatus, type IBook } from '@/types/books';
@@ -34,10 +38,9 @@ const myBooks = computed(():IBook[] => {
 })
 
 const currentStatus = ref<BookStatus|null>(null);
+const filterHeader = ref<string>('');
 
 const setFilter = (status: BookStatus) => {
-    console.log(currentStatus.value);
-
     currentStatus.value = currentStatus.value === status ? null : status;  
 }
 
@@ -47,15 +50,32 @@ const filteredBooks = computed(() => {
             return book.status === BookStatus.TO_READ;
         }
         else if (currentStatus.value === BookStatus.IN_PROGRESS) {
+
             return book.status === BookStatus.IN_PROGRESS;
         }
         else if (currentStatus.value === BookStatus.COMPLETED) {
+
             return book.status === BookStatus.COMPLETED;
         }
-        else return true;
+        else return true
     })
 })
 
+const count = computed(() => {
+    return filteredBooks.value.length;
+})
+
+watch(currentStatus, (newStatus) => {
+    if (newStatus === BookStatus.TO_READ) {
+        filterHeader.value = 'Планирую прочесть';
+    } else if (newStatus === BookStatus.IN_PROGRESS) {
+        filterHeader.value = 'Читаю';
+    } else if (newStatus === BookStatus.COMPLETED) {
+        filterHeader.value = 'Прочитал';
+    } else {
+        filterHeader.value = '';
+    }
+});
 </script>
 
 <style lang="scss" scoped>
