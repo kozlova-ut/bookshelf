@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import '@/assets/styles/variables.scss';
 
 @mixin button {
     $main-color: $orange;
@@ -18,5 +18,20 @@
     &:hover {
         color: $hover-color;
         border-color: $hover-color;
+    }
+}
+
+@mixin icons {
+    
+    .to-read:after {
+        content: url('@/assets/img/to-read.png');
+    }
+
+    .in-progress:after {
+        content: url('@/assets/img/in-progress.png');
+    }
+
+    .completed:after {
+        content: url('@/assets/img/completed.png');
     }
 }

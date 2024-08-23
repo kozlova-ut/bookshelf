@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <main>
         <h2>Каталог</h2>
         <BookList :books="books"></BookList>
-    </div>
+    </main>
 </template>
 
 <script lang="ts" setup>

@@ -46,6 +46,7 @@ const shapeClass = computed(() => {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/variables.scss';
+@import '@/assets/styles/mixins.scss';
 
 .action-btns {
     display: inline-flex;
@@ -79,16 +80,6 @@ const shapeClass = computed(() => {
         }
     }
 
-    .to-read:after {
-        content: url('@/assets/img/to-read.png');
-    }
-
-    .in-progress:after {
-        content: url('@/assets/img/in-progress.png');
-    }
-
-    .completed:after {
-        content: url('@/assets/img/completed.png');
-    }
+    @include icons;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-    <div class="container">
+    <main>
         <div class="book" v-if="book">
             <div class="book__img">
                 <img src="@/assets/img/placeholder.png" :alt="book.title">
             </div>
             <div class="book__main">
                 <ActionButtons 
-                     v-if="user.isAuthorized"
+                        v-if="user.isAuthorized"
                     :book="book" 
                     :btnShape="Shape.SQUARE">
                 </ActionButtons>
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </main>    
 </template>
 
 
