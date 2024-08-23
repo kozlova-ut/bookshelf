@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
 
-export const useUserStore = defineStore('user', () => {
-    const isAuthorized = ref(false);
-
-    function switchAuthState() {
-        isAuthorized.value = !isAuthorized.value
+export const useUserStore = defineStore('user', {
+    state: () => ({
+        isAuthorized: false
+    }),
+    actions: {
+        switchAuthState() {
+            this.isAuthorized = !this.isAuthorized
+        }
     }
-
-    return { isAuthorized, switchAuthState };
 })

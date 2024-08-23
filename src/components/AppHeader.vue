@@ -7,7 +7,7 @@
                 </ul>
                 <div class="header__account">
                     <RouterLink to="/my-books" v-if="user.isAuthorized" class="header__link">Мои книги</RouterLink>
-                    <button @click="user.switchAuthState">{{ user.isAuthorized ? 'Выйти' : 'Войти' }}</button>
+                    <button @click="user.switchAuthState()">{{ user.isAuthorized ? 'Выйти' : 'Войти' }}</button>
                 </div>
             </div>
         </div>
@@ -16,10 +16,20 @@
 
 <script setup>
 import { useUserStore } from '@/stores/user';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
+import { watch } from 'vue';
+import router from '@/router';
 
 const user = useUserStore();
+const route = useRoute();
 
+watch(() => user.isAuthorized, (newValue) => {
+  if (!newValue) {
+    if (route.name === 'my-books') {
+        router.push('/')
+    }
+  }
+});
 
 </script>
 
