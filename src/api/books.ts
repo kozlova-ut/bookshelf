@@ -1,8 +1,15 @@
 import type { IBook } from "@/types/books";
 
-export const getBooks = async (): Promise<IBook[]> => {
+export const getBooks = async (searchText?: string): Promise<IBook[]> => {
     try {
-        const fetchResponse = await fetch('https://freetestapi.com/api/v1/books');
+
+        const query = searchText 
+            ?  new URLSearchParams({
+                search: String(searchText)
+            })
+            : '';
+
+        const fetchResponse = await fetch(`https://freetestapi.com/api/v1/books?${query}`);
         const response = await fetchResponse.json();
         return response;
     } catch(err) {

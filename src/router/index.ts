@@ -17,7 +17,7 @@ const router = createRouter({
     {
       name: 'my-books',
       path: '/my-books',
-      component: () => import('@/views/MyBooks.vue'),
+      component: () => import('@/views/MyBooksView.vue'),
       meta: {
         requiredAuth: true
       }
