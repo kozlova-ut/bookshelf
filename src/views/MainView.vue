@@ -4,7 +4,8 @@
         <div class="search">
             <input type="text" placeholder="Поиск" v-model="searchText"> 
         </div>
-        <BookList :books="books"></BookList>
+        <BookList v-if="!error" :books="books"></BookList>
+        <p v-else>{{ error }}</p>
     </main>
 </template>
 
@@ -15,10 +16,16 @@ import { getBooks } from '@/api/books.ts';
 import BookList from '@/components/BookList.vue';
 
 const books = ref<IBook[]>([]);
+const error = ref<string | null>(null);
 
 const loadBooks = async (searchText: string) => {
-    const response = await getBooks(searchText);
-    books.value = response;
+    error.value = null;
+    try {
+        const response = await getBooks(searchText);
+        books.value = response;        
+    } catch {
+        error.value = 'К сожалению, список книг сейчас недоступен. Попробуйте позже.'
+    }
 }
 
 loadBooks('');
